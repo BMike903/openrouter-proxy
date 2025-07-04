@@ -1,17 +1,16 @@
 require("dotenv").config();
 const express = require("express");
+const qs = require("qs");
 
 const port = 3000;
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello there");
+  res.send("Nothing here, but server is working");
 });
 
-app.get("/test", (req, res) => {
-  const name = req.query.name;
-  const age = req.query.age;
-  res.send(`Привет, ${name}! Тебе ${age} лет.`);
+app.get("/returnJson", (req, res) => {
+  res.json({ ...req.query });
 });
 
 app.get("/message", async (req, res) => {
