@@ -6,6 +6,14 @@ const app = express();
 app.use(express.json());
 
 app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (!origin || !origin.includes("localhost:5173")) {
+    return res.status(403).send("Blocked by origin check");
+  }
+  next();
+});
+
+app.use((req, res, next) => {
   const token = req.headers["x-client-token"];
   if (token !== process.env.TRUSTED_CLIENT_TOKEN) {
     console.log("request with wrong token. Time:", Date.now());
