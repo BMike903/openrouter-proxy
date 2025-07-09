@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (!origin || !origin.includes("localhost:5173")) {
+  if (!origin || !origin.includes("https://bmike903.github.io/LLM-front")) {
     return res.status(403).send("Blocked by origin check");
   }
   next();
