@@ -1,28 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 
 const port = 3000;
 const app = express();
 app.use(express.json());
-app.use(cors());
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (!origin || !origin.includes("https://bmike903.github.io/LLM-front")) {
-    return res.status(403).send("Blocked by origin check");
-  }
-  next();
-});
-
-app.use((req, res, next) => {
-  const token = req.headers["x-client-token"];
-  if (token !== process.env.TRUSTED_CLIENT_TOKEN) {
-    console.log("request with wrong token. Time:", Date.now());
-    return res.status(403).send("Forbidden");
-  }
-  next();
-});
 
 app.get("/", (req, res) => {
   res.send("Nothing here, but server is working");
