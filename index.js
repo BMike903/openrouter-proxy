@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-app.options("/*splat", cors());
+app.options("/{*splat}", cors());
 
 app.get("/", (req, res) => {
   res.send("Nothing here, but server is working");
