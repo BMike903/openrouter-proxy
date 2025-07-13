@@ -26,7 +26,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  const token = req.headers["x-client-token"];
+  const token = req.headers["Client-Token"];
   if (token !== process.env.TRUSTED_CLIENT_TOKEN) {
     console.log("request with wrong token. Time:", Date.now());
     return res.status(403).send("Forbidden");
