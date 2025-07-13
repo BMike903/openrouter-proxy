@@ -9,7 +9,9 @@ const allowedOrigins = [
 ];
 
 const app = express();
+
 app.use(express.json());
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -22,6 +24,15 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  const token = req.headers["x-client-token"];
+  if (token !== process.env.TRUSTED_CLIENT_TOKEN) {
+    console.log("request with wrong token. Time:", Date.now());
+    return res.status(403).send("Forbidden");
+  }
+  next();
+});
 
 app.options("/{*splat}", cors());
 
