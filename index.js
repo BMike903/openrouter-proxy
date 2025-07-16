@@ -3,10 +3,6 @@ const express = require("express");
 const cors = require("cors");
 
 const port = 3000;
-const allowedOrigins = [
-  "https://bmike903.github.io",
-  "https://bmike903.github.io/LLM-front",
-];
 
 const app = express();
 
@@ -15,8 +11,15 @@ app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
+      const allowedOrigins = [
+        "https://bmike903.github.io",
+        "https://bmike903.github.io/LLM-front",
+      ];
+      const isLocalhost = origin && origin.startsWith("http://localhost");
+
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+
+      if (allowedOrigins.includes(origin) || isLocalhost) {
         return callback(null, true);
       } else {
         return callback(new Error("Blocked by CORS"));
